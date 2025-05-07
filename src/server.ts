@@ -2,7 +2,7 @@ import express, {Express, Request, Response} from "express";
 import { config } from "./config/config";
 import { PublisherService } from "./app/publisher/PublisherService";
 import { Message } from "./interfaces/Message";
-import { SubscriberService } from "./app/subscriber/SubscriberService";
+
 
 const app: Express = express();
 app.use(express.json());

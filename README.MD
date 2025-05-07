@@ -2,33 +2,6 @@
 
 A simple Node.js, Express, and TypeScript application demonstrating the use of Redis **Streams** for a **Publisher–Subscriber** model. It uses `ioredis`.
 
----
-
-## 📁 Project Structure
-
-redis-streams-app/
-│
-├── src/
-│ ├── app/
-│ │ ├── publisher/
-│ │ │ └── PublisherService.ts
-│ │ └── subscriber/
-│ │ └── SubscriberService.ts
-│ ├── config/
-│ │ ├── config.ts
-│ │ └── redisClient.ts
-│ ├── interfaces/
-│ │ └── Message.ts
-│ └── server.ts
-│
-├── .env
-├── docker-compose.yml
-├── package.json
-└── README.md
-└── tsconfig.json
-
-
----
 
 ## 📦 Installation
 
@@ -107,4 +80,16 @@ docker exec -it my_redis redis-cli
 ```bash
 XADD messages * sender "ConsoleUser" content "Manual message" timestamp "2024-05-07T15:00:00Z"
 
+```
+
+### Receive the message
+
+```bash
+  XREADGROUP GROUP mygroup consumer-1 BLOCK 5000 COUNT 10 STREAMS messages >
+```
+
+### Acknowledge messages
+
+```bash
+  XACK messages mygroup <message-id>
 ```
