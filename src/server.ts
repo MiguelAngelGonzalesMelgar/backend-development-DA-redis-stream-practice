@@ -9,8 +9,16 @@ app.use(express.json());
 
 const publisher = new PublisherService();
 
+app.get("/", async(req: Request, res: Response) => {
+  res.send("Hello!")
+})
 app.post("/publish", async(req: Request, res: Response) => {
   const { sender, content } = req.body;
+
+   if (!sender || !content) {
+    res.status(400).json({ error: "Missing sender or content" });
+    return;
+  }
 
   const message: Message = {
     sender,
@@ -22,12 +30,6 @@ app.post("/publish", async(req: Request, res: Response) => {
   res.json({ status: "published", id });
 });
 
-if (config.startSubscribers) {
-  new SubscriberService("subscriber-1").listen();
-  new SubscriberService("subscriber-2").listen();
-  new SubscriberService("subscriber-3").listen();
-
-}
 
 app.listen(config.port, () => {
   console.log(`Server running on port ${config.port} 🎉`)

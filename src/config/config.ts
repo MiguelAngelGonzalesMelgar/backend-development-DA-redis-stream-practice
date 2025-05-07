@@ -11,5 +11,5 @@ function requireEnv(key: string): string {
 export const config = {
   port: parseInt(requireEnv("PORT")),
   startSubscribers: process.env.START_SUBSCRIBERS === "true",
-  redisUrl: process.env.REDIS_URL
+  redisUrl: requireEnv("REDIS_URL"),
 };
